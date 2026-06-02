@@ -5,11 +5,12 @@
 </head>
 <body>
     <h1>Protected Page</h1>
+    <p>You are logged in.</p>
 
-    <p>You are logged in!</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Name: {{ user.name }}</p>
 
-    <pre>{{ pretty }}</pre>
-
+    <a href="/">Home</a>
     <a href="/logout">Logout</a>
 </body>
 </html>
