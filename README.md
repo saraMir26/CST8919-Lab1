@@ -230,7 +230,3 @@ Through this lab I learned:
 
 * The `.env` file is excluded from GitHub using `.gitignore`
 * Secrets and credentials should never be committed to version control
-* Hypercorn was used to support async Flask routes with Auth0 SDK
-
-```
-```
