@@ -59,9 +59,6 @@ async def logout():
     logout_url = await auth0.logout(options, g.store_options)
     return redirect(logout_url)
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-
 # Additional protected route example
 @app.route("/protected")
 def protected():
@@ -74,3 +71,7 @@ def protected():
         session=session.get("user"),
         pretty=json.dumps(session.get("user"), indent=4),
     )
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+
