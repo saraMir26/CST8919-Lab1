@@ -1,7 +1,6 @@
 import os
 from auth0_server_python.auth_server.server_client import ServerClient
 from dotenv import load_dotenv
-
 load_dotenv()
 
 # Simple in-memory storage for development

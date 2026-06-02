@@ -1,5 +1,5 @@
 import os
-from flask import Flask, json, redirect, render_template, request, session, url_for, g
+from flask import Flask, redirect, render_template, request, url_for, g
 from auth0_server_python.auth_types import LogoutOptions
 from auth import auth0
 from dotenv import load_dotenv
@@ -54,24 +54,22 @@ async def profile():
 
 @app.route('/logout')
 async def logout():
+    session.clear()
     """Logout and redirect to Auth0 logout"""
     options = LogoutOptions(return_to=url_for("index", _external=True))
     logout_url = await auth0.logout(options, g.store_options)
+    session.clear()
     return redirect(logout_url)
 
-# Additional protected route example
-@app.route("/protected")
-def protected():
-    # Check if user is logged in
-    if "user" not in session:
-        return redirect("/login")
 
-    return render_template(
-        "protected.html",
-        session=session.get("user"),
-        pretty=json.dumps(session.get("user"), indent=4),
-    )
+@app.route('/protected')
+async def protected():
+    user = await auth0.get_user(g.store_options)
+
+    if not user:
+        return redirect(url_for('login'))
+
+    return render_template('protected.html', user=user)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-
+    app.run(debug=False, port=5000, use_reloader=False)
